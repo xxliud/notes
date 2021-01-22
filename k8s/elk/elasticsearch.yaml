@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: elk
+  labels:
+    app: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+        hostname: elasticsearch
+        containers:
+         - image: elasticsearch:6.8.4
+           imagePullPolicy: IfNotPresent
+           name: elasticsearch
+           ports:
+             - name: es-port
+               containerPort: 9200
+             - name: es-tran-port
+               containerPort: 9300
+
+--- # elasticsearch service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: elk
+  labels:
+    name: elasticsearch
+spec:
+  type: NodePort
+  ports:
+  - port: 9200
+    targetPort: 9200
+    protocol: TCP
+    nodePort: 30011
+  selector:
+    app: elasticsearch

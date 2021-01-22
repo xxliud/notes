@@ -1,0 +1,49 @@
+--- # zk deploy
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: my-zk
+  namespace: base
+  labels:
+    app: my-zk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-zk
+  template:
+    metadata:
+      labels:
+        app: my-zk
+    spec:
+      hostname: my-zk
+      dnsPolicy: ClusterFirst
+      containers:
+      - name: my-zk
+        image: zookeeper
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+
+### zk service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-zk
+  namespace: base
+  labels:
+    name: my-zk
+spec:
+  type: NodePort
+  ports:
+  - port:
+    port: 2181
+    targetPort: 2181
+    protocol: TCP
+    nodePort: 30001
+  selector:
+    app: my-zk

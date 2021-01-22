@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-kibana
+  namespace: elk
+  labels:
+    app: my-kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-kibana
+  template:
+    metadata:
+      labels:
+        app: my-kibana
+    spec:
+      containers:
+        - name: my-kibana
+          image: kibana:6.8.4
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 5601
+
+--- # kibana service
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-kibana
+  namespace: elk
+  labels:
+    name: my-kibana
+spec:
+  type: NodePort
+  ports:
+  - port: 5601
+    targetPort: 5601
+    protocol: TCP
+    nodePort: 30010
+  selector:
+    app: my-kibana

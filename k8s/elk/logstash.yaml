@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-logstash
+  namespace: elk
+  labels:
+    app: my-logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-logstash
+  template:
+    metadata:
+      labels:
+        app: my-logstash
+    spec:
+      containers:
+        - name: my-logstash
+          image: logstash:6.8.4
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 5044
+          volumeMounts:
+          - name: log-config
+            mountPath: /usr/share/pipeline
+      volumes:
+       - name: log-config
+         hostPath:
+          path: /Users/xingxu/elk/logstash/pipeline
+
+--- # logstash service
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-logstash
+  namespace: elk
+  labels:
+    name: my-logstash
+spec:
+  type: NodePort
+  ports:
+  - port: 5044
+    targetPort: 5044
+    protocol: TCP
+    nodePort: 30012
+  selector:
+    app: my-logstash
