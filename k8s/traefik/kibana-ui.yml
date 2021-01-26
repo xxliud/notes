@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana-web-ui
+  namespace: traefik
+spec:
+  rules:
+  - host: kibana.zcbb.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: my-kibana
+          servicePort: 5061

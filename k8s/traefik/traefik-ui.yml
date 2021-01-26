@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: traefik-web-ui
-  namespace: traefik
+  namespace: kube-system
 spec:
   rules:
   - host: traefik.zcbb.com
@@ -11,4 +11,4 @@ spec:
       - path: /
         backend:
           serviceName: traefik
-          servicePort: web
+          servicePort: admin

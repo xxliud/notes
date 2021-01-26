@@ -21,18 +21,16 @@ spec:
   template:
     metadata:
       labels:
-      	app: traefik
+        app: traefik
     spec:
-      hostNetwork: true
       serviceAccountName: traefik-ingress-controller
       containers:
         - name: traefik
           image: traefik:v2.2
-	  imagePullPolicy: IfNotPresent
           args:
             - --api.insecure
             - --accesslog
-            - --entrypoints.web.Address=:8000
+            - --entrypoints.web.Address=:8080
             - --entrypoints.websecure.Address=:4443
             - --providers.kubernetescrd
             - --certificatesresolvers.myresolver.acme.tlschallenge
@@ -41,8 +39,10 @@ spec:
             - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
           ports:
             - name: web
-              containerPort: 8000
+              #containerPort: 8000
+              containerPort: 8080
+            - name: websecure
+              containerPort: 4443
             - name: admin
               containerPort: 8080
-	      hostPort: 80
 
