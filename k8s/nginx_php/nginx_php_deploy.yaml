@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kodexplorer-server
+  namespace: base
+  labels:
+    app: kodexplorer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kodexplorer
+      tier: nginx-php
+  template:
+    metadata:
+      labels:
+        app: kodexplorer
+        tier: nginx-php
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/sre_pub/nginx-php-fpm
+        #richarvey/nginx-php-fpm
+        name: kodexplorer-server
+        ports:
+        - containerPort: 9000
+        - containerPort: 80
+          name: nginx-php
+        volumeMounts:
+        - name: web-data
+          mountPath: /var/www/html/
+      volumes:
+      - hostPath:
+      	path: /opt/nginx
+      	type: DirectoryOrCreate
+    	name: web-data
+# minikube mount /Users/xingxu/workspace/nginx:/opt/nginx &
