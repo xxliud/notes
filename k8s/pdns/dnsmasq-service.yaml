@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dnsmasq
+  name: dnsmasq
+  namespace: base
+spec:
+  ports:
+  - name: dnsmasq
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30055
+  - name: dnsmasq-udp
+    port: 53
+    protocol: UDP
+    targetPort: 53
+  selector:
+    app: dnsmasq
+  type: NodePort
