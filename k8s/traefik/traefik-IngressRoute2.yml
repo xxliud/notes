@@ -1,14 +1,14 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: simpleingressroute
+  name: simpleingressroute2
   namespace: traefik
 spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`traefik.zcbb.dashboard`)
+  - match: Host(`k10.zcbb.dashboard`)
     kind: Rule
     services:
     - name: traefik
-      port: admin
+      port: 8080
