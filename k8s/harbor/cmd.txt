@@ -1,0 +1,3 @@
+helm del --purge my-release
+
+helm install -f values.yaml --name my-release --namespace harbor harbor/harbor

@@ -2,3 +2,7 @@
 192.168.99.107 k9s.zcbb.dashboard
 192.168.99.107 k8s.zcbb.dashboard
 192.168.99.107 k10.zcbb.dashboard
+192.168.99.107 harbor.zcbb.dashboard 
+192.168.99.107 notary.harbor.domain
+192.168.99.107 harbor.zcbb.domain
+192.168.99.107 core.harbor.domain
