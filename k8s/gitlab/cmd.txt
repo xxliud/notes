@@ -1,0 +1,4 @@
+helm fetch gitlab/gitlab-runner
+helm install -f values.yaml --name gitlab-runner-1 --namespace gitlab gitlab/gitlab-runner
+
+https://blog.csdn.net/boling_cavalry/article/details/106991576
