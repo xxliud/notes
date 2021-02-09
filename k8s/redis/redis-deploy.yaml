@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
       - name: init-redis
-        image: busybox:1.1.1
+        image: busybox
         command: ['sh', '-c', 'mkdir -p /redis/log/;mkdir -p /redis/conf/;mkdir -p /redis/data/']
         volumeMounts:
         - name: data
