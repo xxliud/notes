@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  labels:
-    app: redis
   name: redis
   namespace: redis
 spec:
   replicas: 1
+  serviceName: redis
   selector:
     matchLabels:
       name: redis
@@ -15,15 +14,34 @@ spec:
       labels:
         name: redis
     spec:
+      initContainers:
+      - name: init-redis
+        image: busybox:1.1.1
+        command: ['sh', '-c', 'mkdir -p /redis/log/;mkdir -p /redis/conf/;mkdir -p /redis/data/']
+        volumeMounts:
+        - name: data
+          mountPath: /redis/
       containers:
       - name: redis
-        image: redis:5.0
-        volumeMounts:
-        - name: redis-project
-          mountPath: "/data"
+        image: redis:4.0.6
+        imagePullPolicy: IfNotPresent
         command:
-          - "redis-server"
+        - sh
+        - -c
+        - "exec redis-server /redis/conf/redis.conf"
+        ports:
+        - containerPort: 6379
+          name: redis
+          protocol: TCP
+        volumeMounts:
+        - name: redis-config
+          mountPath: /redis/conf/
+        - name: data
+          mountPath: /redis/
       volumes:
-      - name: redis-project
+      - name: redis-config
+        configMap:
+          name: redis-conf
+      - name: data 
         persistentVolumeClaim:
           claimName: redis-project-pvc
