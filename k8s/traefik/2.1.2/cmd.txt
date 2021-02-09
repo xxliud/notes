@@ -1,0 +1,4 @@
+minikube start --cpus=4 --memory=8196 --vm-driver=virtualbox --logtostderr --v=3 --registry-mirror=https://registry.docker-cn.com --registry-mirror=https://8eoqixdq.mirror.aliyuncs.com --registry-mirror=https://dockerhub.azk8s.cn  --insecure-registry=local.registry:5000 --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
+
+
+kubectl label nodes minikube IngressProxy=true
