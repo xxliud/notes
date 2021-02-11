@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: redis-project-pv
-  namespace: redis
+  name: gitlab-project-pv
+  namespace: gitlab
   labels:
-    pv: redis-project-pv
+    pv: gitlab-project-pv
 spec:
   capacity:
     storage: 1Gi
@@ -20,8 +20,8 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: redis-project-pvc
-  namespace: redis
+  name: gitlab-project-pvc
+  namespace: gitlab
 spec:
   accessModes:
   - ReadWriteOnce
@@ -30,4 +30,4 @@ spec:
       storage: 1Gi
   selector:
     matchLabels:
-      pv: redis-project-pv
+      pv: gitlab-project-pv
