@@ -1,7 +1,12 @@
 本地启动minikube
 
 ```shell
-minikube start --cpus=5 --memory=9196 --driver=virtualbox --registry-mirror=https://registry.docker-cn.com --disk-size=50000mb
+# 启动minikube 使用国内镜像源
+minikube start --cpus=5 --memory=9196 --disk-size=50000mb --vm-driver=virtualbox  --registry-mirror=https://registry.docker-cn.com --registry-mirror=https://8eoqixdq.mirror.aliyuncs.com --registry-mirror=https://dockerhub.azk8s.cn  --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
+
+# 挂载卷轴
+minikube mount /Users/xingxu/workspace/k8s/pv:/data
+
 ```
 
 
@@ -42,5 +47,20 @@ subjects:
 ```shell
 # 批量删除pvc
 kubectl get pvc -n harbor | awk 'NR>1{print $1}' | xargs kubectl delete pvc -n harbor
+```
+
+
+
+
+
+2021年划计
+
+```markdown
+* 全年开支明细
+- 房贷 3.2w
+- 保险 0.85w
+- 生活费 6w
+- 孩子 1.5w
+
 ```
 
