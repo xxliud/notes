@@ -1,0 +1,8 @@
+helm upgrade --install nfs-client-provisioner c7n/nfs-client-provisioner \
+    --set rbac.create=true \
+    --set persistence.enabled=true \
+    --set storageClass.name=nfs-provisioner \
+    --set persistence.nfsServer=127.0.0.1 \
+    --set persistence.nfsPath=/u01/prod \
+    --version 0.1.1 \
+    --namespace kube-system
